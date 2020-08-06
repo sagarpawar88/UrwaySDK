@@ -5,7 +5,7 @@ spec.license       = { :type => 'MIT' }
 spec.homepage      = 'www.concertosoft.com'
 spec.authors       = { 'sagar' => 'sagar.pawar@concertosoft.com' }
 spec.summary       = 'Urway Framework'
-spec.source        = { :git => 'https://github.com/Aravindhan132/UrwaySDK.git'}
+spec.source        = { :git => 'https://github.com/sagarpawar88/UrwaySDK.git'}
 
 spec.ios.deployment_target  = '11.0'
 spec.swift_version = '5'
