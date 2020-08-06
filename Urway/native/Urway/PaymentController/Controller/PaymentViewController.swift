@@ -134,8 +134,10 @@ extension PaymentViewController: IPaymentViewController {
             }else {
                 print("not sucess")
             
+           
+            
             // targeturl  == "some value" || targeturl == ""/null
-            var targetURL : String = responce?["targetUrl"] as! String
+            let targetURL : String = responce?["targetUrl"] as? String ?? ""
             if targetURL.count == 0 {
                 payid = (responce?["payid"] as? String) ?? "nil"
                 tranid = (responce?["tranid"] as? String) ?? ""
