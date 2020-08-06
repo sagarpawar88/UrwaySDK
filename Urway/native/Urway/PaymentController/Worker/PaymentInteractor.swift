@@ -1,3 +1,4 @@
+
 //
 //  PaymentInteractor.swift
 //  Urway
@@ -91,11 +92,11 @@ class PaymentInteractor: IPaymentInteractor {
             "tokenizationType": tokenizationType,
             "instrumentType" : "DEFAULT",
             "cardHolderName": holderName
+            
             ] as [String : Any]
         
         
-        
-        
+       
         print("request data ",parameters)
         let urlString = Common.Globle.url
         let request = NSMutableURLRequest(url: NSURL(string: urlString)! as URL,
@@ -130,6 +131,9 @@ class PaymentInteractor: IPaymentInteractor {
                     if let result = receivedTodo["result"] as? String , result == "UnSuccessful" , let code =  receivedTodo["responsecode"] as? String , code != "000"{
                         self.presenter?.apiResult(result: .failure("\(code)"), responce: receivedTodo, error: error);
                         return
+                    }else if let result = receivedTodo["result"] as? String , result == "Successful" , let code =  receivedTodo["responsecode"] as? String , code == "000"{
+                        self.presenter?.apiResult(result: .sucess, responce: receivedTodo, error: error);
+                        return
                     }
                     
                      
@@ -140,9 +144,22 @@ class PaymentInteractor: IPaymentInteractor {
                         return
                     }
                     
-                    
+                       /*
                     if tockenName == "D" , let payID = receivedTodo["payid"] as? String{
+                        
                         fullURL = "https://payments-dev.urway-tech.com/URWAYPGService/3DRedirect.jsp?paymentid=\(payID)"
+                    } else {
+                        fullURL = self.newURL
+                    }*/
+                    
+                    if tockenName == "D"{
+                        if let payID = receivedTodo["payid"] as? String{
+                            self.newURL = "\(self.newURL)?paymentid=\(payID)"
+                            fullURL = "\(self.newURL)\(payID)"
+                        }else{
+                            fullURL = self.newURL
+                        }
+                        //fullURL = "https://payments-dev.urway-tech.com/URWAYPGService/3DRedirect.jsp?paymentid=\(payID)"
                     } else {
                         fullURL = self.newURL
                     }
@@ -198,7 +215,7 @@ extension PaymentInteractor {
             return sha256String
         }
         return ""
-    }
+    } 
     
 }
 
